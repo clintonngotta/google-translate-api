@@ -3,12 +3,21 @@ from fastapi.responses import JSONResponse
 from fastapi import Request
 from fastapi import HTTPException
 
-from googletrans import Translator
+from googletrans import Translator, LANGUAGES
 
 from models import TranslationModel
 
 
 app = FastAPI()
+
+@app.get("/health")
+def health_check():
+    """
+    Health check endpoint.
+    """
+    return JSONResponse(content={"status": "ok"})
+
+
 @app.get("/")
 def read_root():
     return "Welcome to the Google Translate API"
@@ -51,3 +60,11 @@ async def translate_text(
         raise HTTPException(status_code=500, detail="Translation failed")
     print("translated_text:", translated_text)
     return JSONResponse(content={"translated_text": translated_text.text, "detected_source_language": translated_text.src, "target_language": translated_text.dest})
+
+
+@app.get("/languages")
+async def get_languages():
+    """
+    Get a list of supported languages for translation.
+    """
+    return JSONResponse(content={"languages": LANGUAGES})
