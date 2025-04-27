@@ -3,6 +3,10 @@ from fastapi.responses import JSONResponse
 from fastapi import Request
 from fastapi import HTTPException
 
+
+from models import TranslationModel
+
+
 app = FastAPI()
 @app.get("/")
 def read_root():
@@ -24,9 +28,8 @@ async def general_exception_handler(request: Request, exc: Exception):
 
 @app.post("/translate")
 async def translate_text(
-    text: str,
-    target_lang: str,
-    request: Request
+    data: TranslationModel
 ):    
-    translated_text = f"Translated '{text}' to {target_lang}"
+    
+    translated_text = f"Translated '{data.text}' to {data.target_lang}"
     return JSONResponse(content={"translated_text": translated_text})
