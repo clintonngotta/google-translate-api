@@ -68,7 +68,7 @@ This project uses the following Python libraries:
 
     ```bash
     python -m venv venv
-        source venv/bin/activate
+    source venv/bin/activate
 
     ```
 
@@ -89,4 +89,9 @@ This project uses the following Python libraries:
 
     ```bash
     fastapi dev
+    ```
+
+5.  deployment startup command
+    ```bash
+    uvicorn main:app --host 0.0.0.0 --port 8000 --workers 2
     ```
